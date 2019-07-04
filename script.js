@@ -1,7 +1,5 @@
-const obj = {
-    greeting: 'hello ~',
-    name: 'world'
-}
+import a from './modules/a'
 
-const {greeting, name} = obj
-console.log(greeting, name)
+console.log('--------a.name--------')
+console.log(a.name)
+console.log('--------a.name--------')

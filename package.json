@@ -4,7 +4,9 @@
   "description": "test some functions of es6",
   "main": "script.js",
   "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server"
+    "start": "./node_modules/.bin/webpack-dev-server",
+    "dev": "webpack-dev-server --history-api-fallback --config webpack.config.js",
+    "build": "webpack --progress --hide-modules --config webpack.prod.config.js"
   },
   "keywords": [
     "es6"
