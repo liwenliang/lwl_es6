@@ -5,8 +5,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-  <script src="./dist/bundle.js" charset="utf-8"></script>
+<div class="container" id="videoPlayer">
+  <div class="sideBar">
+            <span class="no-padding">
+                <img src="img/home.png" class="left" id="btnHome" title="Visit My Homepage"
+                     onclick="window.open('https://blog.csdn.net/sonysuqin')"/>
+            </span>
+  </div>
+  <div class="canvasDiv">
+    <canvas id="playCanvas" width="400" height="180"></canvas>
+  </div>
+  <div class="sideBar">
+            <span class="no-padding">
+                <img src="img/play.png" class="left" id="btnPlayVideo" onclick="playVideo()"/>
+            </span>
+    <span class="no-padding" style=" padding-left:5px;">
+                <img src="img/stop.png" class="left" id="btnStopVideo" onclick="stopVideo()"/>
+            </span>
+    <span class="track-padding">
+            </span>
+    <span class="no-padding">
+                <input id="timeTrack" type="range" value="0">
+            </span>
+    <span class="no-padding" style=" padding-left:10px;">
+                <label id="timeLabel">00:00:00/00:00:00</label>
+            </span>
+    <span class="no-padding right">
+                <img src="img/fullscreen.png" class="right" id="btnFullscreen" onclick="fullscreen()"/>
+            </span>
+  </div>
+</div>
+<div id="footer">Copyright &copy; 2019 sonysuqin.All rights reserved.</div>
+
+<script type='text/javascript' src="common.js"></script>
+<script type='text/javascript' src="pcm-player.js"></script>
+<script type='text/javascript' src="webgl.js"></script>
+<script type='text/javascript' src="player.js"></script>
+<script src="./dist/bundle.js" charset="utf-8"></script>
+<script type="text/javascript">
+  // Player object.
+  self.player = new Player()
+
+  // File url.
+  // var videoFileUrl = 'http://0.0.0.0:9802/h265/h265_miaopai.mp4'
+  // var videoFileUrl = 'http://0.0.0.0:9802/h265/h265_miaopai_1.mp4'
+  // var videoFileUrl = 'http://10.30.0.228:9802/h265/h265video.mp4'
+  var videoFileUrl = 'http://10.30.0.228:9802/h265/h265_high.mp4'
+
+  // Formated logger.
+  var logger = new Logger('Page')
+
+  function playVideo() {
+    var el = document.getElementById('btnPlayVideo')
+    var currentState = self.player.getState()
+    if (currentState === playerStatePlaying) {
+      el.src = 'img/play.png'
+    } else {
+      el.src = 'img/pause.png'
+    }
+
+    if (currentState !== playerStatePlaying) {
+      const canvasId = 'playCanvas'
+      var canvas = document.getElementById(canvasId)
+      if (!canvas) {
+        logger.logError('No Canvas with id ' + canvasId + '!')
+        return false
+      }
+
+      self.player.play(videoFileUrl, canvas, function(e) {
+        console.log('play error ' + e.error + ' status ' + e.status + '.')
+        if (e.error === 1) {
+          logger.logInfo('Finished.')
+        }
+      }, 524288)
+
+      var timeTrack = document.getElementById('timeTrack')
+      var timeLabel = document.getElementById('timeLabel')
+      self.player.setTrack(timeTrack, timeLabel)
+    } else {
+      self.player.pause()
+    }
+
+    return true
+  }
+
+  function stopVideo() {
+    self.player.stop()
+    var button = document.getElementById('btnPlayVideo')
+    button.value = 'Play'
+  }
+
+  function fullscreen() {
+    self.player.fullscreen()
+  }
+</script>
 </body>
 </html>
