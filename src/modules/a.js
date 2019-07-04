@@ -1,3 +1,3 @@
 module.exports = {
-  name: 'liwenliang'
+  name: 'es6module'
 }
