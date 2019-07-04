@@ -1,9 +1,9 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
-  entry: './script.js',
+  entry: './src/main.js',
   output: {
-    filename: './bundle.[chunkhash].js'
+    filename: './dist/bundle.[chunkhash].js'
   },
   module: {
     rules: [
