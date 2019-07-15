@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {

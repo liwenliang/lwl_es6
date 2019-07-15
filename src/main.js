@@ -1,5 +1,19 @@
-import { name, age } from './modules/a'
+import Event from './modules/Event'
 
-console.log('--------a.name--------')
-console.log(`name is ${name} and age is ${age}`)
-console.log('--------a.name--------')
+window.Events = Event
+
+function func1() {
+  console.log('2')
+}
+
+Event.on('myEvent', function(obj) {
+  console.log(obj)
+})
+
+Event.on('myEvent', func1)
+
+setTimeout(function() {
+  // Event.remove('myEvent', func1)
+  Event.emit('myEvent', { name: 'liwenliang' })
+}, 2000)
+

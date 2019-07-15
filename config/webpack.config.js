@@ -1,5 +1,4 @@
-const webpack = require('webpack')
-
+// eslint-disable-next-line no-undef
 module.exports = {
   entry: './src/main.js',
   output: {
