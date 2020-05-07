@@ -1,19 +1,21 @@
-import Event from './modules/Event'
+import { parsePath } from './modules/utils'
 
-window.Events = Event
+console.log(parsePath('a.b.c.d')({ a: { b: { c: { d: 'liwenliang' }}}}))
 
-function func1() {
-  console.log('2')
+function createObj(path, value) {
+  const pathArr = path.split('.')
+  const obj = {}
+  let tmp = obj
+  for (let i = 0; i < pathArr.length; i++) {
+    const key = pathArr[i]
+    if (i === pathArr.length - 1) {
+      tmp[key] = value
+    } else {
+      tmp[key] = {}
+      tmp = tmp[key]
+    }
+  }
+  return obj
 }
 
-Event.on('myEvent', function(obj) {
-  console.log(obj)
-})
-
-Event.on('myEvent', func1)
-
-setTimeout(function() {
-  // Event.remove('myEvent', func1)
-  Event.emit('myEvent', { name: 'liwenliang' })
-}, 2000)
-
+console.log(createObj('a.b.c.d', 'liwenliang'))
